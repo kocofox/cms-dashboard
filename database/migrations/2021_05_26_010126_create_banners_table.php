@@ -16,9 +16,12 @@ class CreateBannersTable extends Migration
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
             $table->string('alt');
-            $table->string('url');
+            $table->string('url')->nullable();
+            $table->string('link')->nullable();
+            $table->string('descripcion')->nullable();
             $table->json('urls')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

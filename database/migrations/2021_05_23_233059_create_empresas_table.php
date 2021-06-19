@@ -24,6 +24,7 @@ class CreateEmpresasTable extends Migration
             $table->json('horario')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -17,7 +17,7 @@ class CreateWebsTable extends Migration
             $table->id();
             $table->String('titulo');
             $table->longText('descripcion')->nullable();
-            $table->string('etiquetas')->nullable();
+            $table->json('etiquetas')->nullable();
             $table->string('logo')->nullable();
             $table->string('favicon')->nullable();
             $table->json('redes')->nullable();

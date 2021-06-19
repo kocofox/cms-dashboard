@@ -13,7 +13,7 @@ class ActualizarServicioRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +24,11 @@ class ActualizarServicioRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required|unique:servicios,nombre,' . $this->route('servicios')->id,
+            'id' => '',
+            'nombre' => 'required|unique:servicios,nombre,' . $this->route('servicio')->id,
             'lugar' => '',
             'descripcion' => 'required',
-            'categoria' => '',
+            'categoria_id' => '',
             'imagen' => '',
             'imgs' => '',
         ];

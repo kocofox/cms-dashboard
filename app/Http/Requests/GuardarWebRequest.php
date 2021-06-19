@@ -26,14 +26,14 @@ class GuardarWebRequest extends FormRequest
         return [
             'titulo' => 'required',
             'descripcion' => 'required',
-            'etiquetas' => 'required',
-            'logo' => 'required',
-            'favicon' => 'required',
-            'redes' => 'required',
-            'nosotros' => 'required',
-            'mision' => 'required',
-            'vision' => 'required',
-            'footer' => 'required ',
+            'etiquetas' => '',
+            'logo' => '',
+            'favicon' => '',
+            'redes' => '',
+            'nosotros' => '',
+            'mision' => '',
+            'vision' => '',
+            'footer' => ' ',
         ];
     }
 }

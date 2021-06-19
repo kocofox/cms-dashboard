@@ -19,7 +19,11 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name',
+        'fullname',
+        'profiles_id',
+        'profile',
         'email',
+        'avatar',
         'password',
     ];
 
@@ -52,6 +56,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function noticias(){
         return $this->hasMany('App\Models\Noticia');
+
+    }
+    public function profile(){
+        return $this->belongsTo('App\Models\Profile');
 
     }
 }

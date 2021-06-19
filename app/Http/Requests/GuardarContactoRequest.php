@@ -27,7 +27,7 @@ class GuardarContactoRequest extends FormRequest
             'razonSocial' => 'required',
             'ruc' => 'required',
             'correo' => 'required',
-            'direccion' => 'required',
+            'direccion' => '',
             'telefono' => 'required',
 
             'asunto' => 'required',

@@ -14,4 +14,8 @@ class banner extends Model
         'urls',
                 
     ];
+    protected $casts = [
+        'urls'=> 'array'
+        
+    ];
 }

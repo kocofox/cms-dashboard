@@ -24,11 +24,12 @@ class GuardarNoticiaRequest extends FormRequest
     public function rules()
     {
         return [
-            'titulo' => 'required',
+            'titulo' => 'required|unique:noticias,titulo,',
             'contenido' => 'required',
             'img' => 'required',
-            'categoria_id' => 'required',
+            'categorias_id' => 'required',
             'user_id' => 'required',
+            'status' => '',
             'etiquetas' => '',
             'redes' => '',
             'otros' => '',

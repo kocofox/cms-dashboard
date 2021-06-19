@@ -16,7 +16,11 @@ class Categoria extends Model
         
     ];
     public function noticias(){
-        return $this->hasMany('App\Models\Noticias');
+        return $this->hasMany('App\Models\Noticia');
+
+    }
+    public function servicios(){
+        return $this->hasMany('App\Models\Servicio');
 
     }
 }

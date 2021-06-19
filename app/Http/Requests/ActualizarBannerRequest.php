@@ -13,7 +13,7 @@ class ActualizarBannerRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,6 +27,8 @@ class ActualizarBannerRequest extends FormRequest
             'alt' => 'required|unique:banners,alt,' . $this->route('banner')->id,
             'url' => 'required',
             'urls' => '',
+            'link' => '',
+            'descripcion' => '',
         ];
     }
 }

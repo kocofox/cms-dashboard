@@ -19,4 +19,5 @@ class empresa extends Model
         'logo',
         
     ];
+    
 }

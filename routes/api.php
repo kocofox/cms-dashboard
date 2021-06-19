@@ -7,8 +7,10 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\UsuariosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +34,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::post('/web', [WebController::class,'store']);
 // Route::patch('/web', [WebController::class,'update']);
 Route::get('/home', [HomeController::class,'index']);
+Route::get('/inicio', [HomeController::class,'datosweb']);
 // //noticias
 // Route::get('/noticias', [NoticiaController::class,'index']);
 // Route::get('/noticias/{noticia}', [NoticiaController::class,'show']);
@@ -47,15 +50,18 @@ Route::apiResource('clientes', ClienteController::class);
 Route::apiResource('servicios', ServicioController::class);
 Route::apiResource('roles', RoleController::class);
 Route::apiResource('contacto', ContactoController::class);
-
+Route::apiResource('usuarios', UsuariosController::class);
+Route::apiResource('profiles', ProfileController::class);
 
 
 //login
-Route::post('/register', 'App\Http\Controllers\UserController@register');
-Route::post('/login', 'App\Http\Controllers\UserController@authenticate');
+Route::post('/register', 'App\Http\Controllers\AuthController@register');
+Route::post('/login', 'App\Http\Controllers\AuthController@authenticate');
+//Route::get('/usuarios', 'App\Http\Controllers\UserController@index');
 
 Route::group(['middleware' => ['jwt.verify']], function() {
 
-    Route::post('user','App\Http\Controllers\UserController@getAuthenticatedUser');
+    Route::post('user','App\Http\Controllers\AuthController@get_user');
+    Route::get('logout','App\Http\Controllers\AuthController@logout');
 
 });

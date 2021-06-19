@@ -13,7 +13,7 @@ class ActualizarCategoriaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class ActualizarCategoriaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required|unique:categorias,nombre,'.$this->route('categorias')->id, //'required|unique:noticias,titulo,{$this->noticias->id}',
+            'nombre' => 'required|unique:categorias,nombre,'.$this->route('categoria')->id, //'required|unique:noticias,titulo,{$this->noticias->id}',
             'descripcion' => '',
             'imagen' => '',
             

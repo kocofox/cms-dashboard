@@ -29,7 +29,7 @@ class ContactoController extends Controller
     public function store(GuardarContactoRequest $request)
     {
         
-        return (new WebResource(Contacto::create($request->all())))->additional(['msg' => 'Contacto agregada correctamente']);
+        return (new WebResource(Contacto::create($request->all())))->additional(['msg' => 'Mensaje enviado correctamente']);
     }
 
     /**
