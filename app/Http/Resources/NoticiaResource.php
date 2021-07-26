@@ -21,7 +21,7 @@ class NoticiaResource extends JsonResource
             'contenido' => $this->contenido,
             'img' => $this->img,
             'categoria' => $this->categoria, //categorias::where('id', $this->categorias)->get(),
-            'categorias_id' => $this->categoria_id,
+            'categoria_id' => $this->categoria_id,
             'etiquetas' => $this->etiquetas,
             'redes' => $this->redes,
             'otros' => $this->categori,

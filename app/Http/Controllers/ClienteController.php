@@ -47,7 +47,7 @@ class ClienteController extends Controller
         
 
         $cliente->save();
-        return (new WebResource($cliente))->additional(['msg' => 'Cliente agregada correctamente']);
+        return (new WebResource($cliente))->additional(['msg' => 'Cliente agregado correctamente']);
     }
 
     /**
@@ -106,7 +106,7 @@ class ClienteController extends Controller
             );
         }
       
-        return (new WebResource($cliente))->additional(['msg' => 'Cliente actualizada correctamente']);
+        return (new WebResource($cliente))->additional(['msg' => 'Cliente actualizado correctamente']);
     }
 
     /**
@@ -121,7 +121,7 @@ class ClienteController extends Controller
         File::delete($imgdel);
         $cliente->delete();
         
-        return (new WebResource($cliente))->additional(['msg' => 'Cliente eliminada correctamente']);
+        return (new WebResource($cliente))->additional(['msg' => 'Cliente eliminado correctamente']);
     }
     private function upload($image)
     {

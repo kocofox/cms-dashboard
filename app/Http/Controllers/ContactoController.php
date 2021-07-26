@@ -7,6 +7,9 @@ use App\Http\Requests\GuardarContactoRequest;
 use App\Http\Resources\WebResource;
 use App\Models\Contacto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactanosMailable;
+use Illuminate\Support\Str;
 
 class ContactoController extends Controller
 {
@@ -28,10 +31,30 @@ class ContactoController extends Controller
      */
     public function store(GuardarContactoRequest $request)
     {
-        
-        return (new WebResource(Contacto::create($request->all())))->additional(['msg' => 'Mensaje enviado correctamente']);
+       $request->validated();
+        $url_image = $this->upload($request->file('imagen'));
+        $correos = Contacto::create($request->all());
+        $correos->update(
+            [
+                'imagen' => $url_image,
+                
+            ]
+        );  
+        $smail = new ContactanosMailable($correos) ;
+         Mail::to('kocofox@gmail.com') ->send( $smail ) ;
+        return (new WebResource($correos))->additional(['msg' => 'Mensaje enviado correctamente']);
     }
+    private function upload($image)
+    {
+        $filename =  $image->getClientOriginalName();
+        $name = Str::replace(" ", '_', $filename);
+        $path_info = pathinfo($image->getClientOriginalName());
+        $post_path = 'images/contacto';
 
+        $rename = uniqid() . '-' . $name;
+        $image->move(public_path() . "/$post_path", $rename);
+        return env('APP_URL')."$post_path/$rename";
+    }
     /**
      * Display the specified resource.
      *
