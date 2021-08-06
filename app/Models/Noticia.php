@@ -18,15 +18,41 @@ class Noticia extends Model
         'etiquetas',
         'redes',
         'otros',
-        
+
     ];
-
-    public function user(){
-        return $this->belongsTo('App\Models\User');
-
+    protected $casts = [
+        'redes' => 'array',
+        'etiquetas' => 'array',
+        'otros' => 'array'
+    ];
+    public function getRouteKeyName()
+    {
+        return 'titulo';
     }
-    public function categoria(){
+    public function resolveRouteBinding( $value, $field = NULL )
+    {
+        return $this->newQuery()
+            ->when( is_numeric( $value ), 
+
+                function ( $query ) use ( $value ) {
+                    $query->where('id', $value );
+                    
+                }, 
+                function ( $query ) use ( $value ) { // else
+                    $query->where('titulo', $value );
+                   
+                } 
+            )
+            ->firstOrFail();
+    }
+    
+public function categoria()
+    {
         return $this->belongsTo('App\Models\Categoria');
-
     }
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    
 }

@@ -13,7 +13,7 @@ class GuardarBannerRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,8 +25,10 @@ class GuardarBannerRequest extends FormRequest
     {
         return [
             'alt' => 'required',
-            'url' => 'required',
+            'url' => '',
             'urls' => '',
+            'link' => '',
+            'descripcion' => '',
         ];
     }
 }

@@ -24,16 +24,14 @@ class ActualizarClienteRequest extends FormRequest
     public function rules()
     {
         return [
-            'razonSocial' => 'required|unique:clientes,razonSocial,' . $this->route('clientes')->id, //'required|unique:noticias,titulo,{$this->noticias->id}',
+            'razonSocial' => 'required|unique:clientes,razonSocial,' . $this->route('cliente')->id, //'required|unique:noticias,titulo,{$this->noticias->id}',
             'ruc' => 'required',
             'correo' => '',
             'direccion' => '',
             'telefono' => '',
-
-            'correo' => '',
             'slogan' => '',
             'horario' => '',
-            'logo' => '',
+            'logo' => 'required',
 
 
         ];

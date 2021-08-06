@@ -26,11 +26,16 @@ class ActualizarNoticiaRequest extends FormRequest
     {
         $noticia = $this->route()->parameter('noticia');
         return [
-            'titulo' => 'required|unique:noticias,titulo,'. $noticia->id,    //$this->route('noticia')->id, //'required|unique:noticias,titulo,{$this->noticias->id}',
+            'titulo' => 'required|unique:noticias,titulo,'.$noticia->id,    //$this->route('noticia')->id, //'required|unique:noticias,titulo,{$this->noticias->id}',
             'contenido' => 'required',
-            'img' => 'required',
-            'categoria' => 'required',
-            
+            'img' => '',
+            'user_id' => '',
+            'categoria_id' => '',
+            'status' => '',
+            'etiquetas' => '',
+            'redes' => '',
+            'otros' => '',
+
         ];
     }
 }

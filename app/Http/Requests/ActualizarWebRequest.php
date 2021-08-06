@@ -26,15 +26,15 @@ class ActualizarWebRequest extends FormRequest
         return [
             //
             'titulo' => 'required|unique:webs,titulo,'.$this->route('web')->id,
-            'descripcion' => 'required',
+            'descripcion' => '',
             'etiquetas' => '',
             'logo' => '',
             'favicon' => '',
-            'redes' => 'required',
-            'nosotros' => 'required',
-            'mision' => 'required',
-            'vision' => 'required',
-            'footer' => 'required ',
+            'redes' => '',
+            'nosotros' => '',
+            'mision' => '',
+            'vision' => '',
+            'footer' => '',
         ];
     }
 }

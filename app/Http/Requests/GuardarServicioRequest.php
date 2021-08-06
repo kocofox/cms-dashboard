@@ -13,7 +13,7 @@ class GuardarServicioRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,7 +27,7 @@ class GuardarServicioRequest extends FormRequest
             'nombre' => 'required',
             'lugar' => '',
             'descripcion' => 'required',
-            'categoria' => '',
+            'categoria_id' => '',
             'imagen' => '',
             'imgs' => '',
             

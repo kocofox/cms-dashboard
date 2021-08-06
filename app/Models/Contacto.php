@@ -11,12 +11,12 @@ class contacto extends Model
     protected $fillable = [
         'razonSocial',
         'ruc',
-       'correo', 
-       'direccion',
+        'correo',
+        'direccion',
         'telefono',
         'asunto',
         'mensaje',
-        
-        
+
+
     ];
 }

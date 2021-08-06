@@ -16,14 +16,16 @@ class NoticiaResource extends JsonResource
     {
         //return parent::toArray($request);
         return [
+            'id' => $this->id,
             'titulo' => $this->titulo,
             'contenido' => $this->contenido,
             'img' => $this->img,
-            'categorias' => $this->categoria, //categorias::where('id', $this->categorias)->get(),
+            'categoria' => $this->categoria, //categorias::where('id', $this->categorias)->get(),
+            'categoria_id' => $this->categoria_id,
             'etiquetas' => $this->etiquetas,
             'redes' => $this->redes,
-            'otros' => $this->otros,
-            'Usuario' => $this->user,
+            'otros' => $this->categori,
+            'usuario' => $this->user,
         ];
     }
     
