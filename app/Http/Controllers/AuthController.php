@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use JWTAuth;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\UserResource;
+use Log;
 
 class AuthController extends Controller
 {
@@ -109,27 +111,14 @@ class AuthController extends Controller
         }
     }
  
-    public function get_user(Request $request)
+    public function getuser(Request $request)
     {
-        // $this->validate($request, [
-        //     'token' => 'required'
-        // ]);
+        $this->validate($request, [
+            'token' => 'required'
+        ]);
  
-        // $user = JWTAuth::authenticate($request->token);
+        $user = JWTAuth::authenticate($request->token);
  
-        // return response()->json(['user' => $user]);
-        try {
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['token_expired'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['token_invalid'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json(['token_absent'], $e->getStatusCode());
-        }
-        return response()->json(compact('user'));
-       // return new UserResource($user);
+        return response()->json(['user' => $user]);
     }
 }

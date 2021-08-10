@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,13 +31,13 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 //info empresa
-Route::get('/home', [HomeController::class, 'index']);
-Route::get('/inicio', [HomeController::class, 'datosweb']);
-Route::get('/noticia', [HomeController::class, 'noticiasver']);
-Route::get('/noticia/{noticia}', [HomeController::class, 'noticia']);
-Route::get('/servicio', [HomeController::class, 'serviciosver']);
-Route::get('/servicio/{servicio}', [HomeController::class, 'servicio']);
-Route::post('/contactos', [ContactoController::class, 'store']);
+Route::get('home', [HomeController::class, 'index']);
+Route::get('inicio', [HomeController::class, 'datosweb']);
+Route::get('noticia', [HomeController::class, 'noticiasver']);
+Route::get('noticia/{noticia}', [HomeController::class, 'noticia']);
+Route::get('servicio', [HomeController::class, 'serviciosver']);
+Route::get('servicio/{servicio}', [HomeController::class, 'servicio']);
+Route::post('contactos', [ContactoController::class, 'store']);
 //login
 //Route::post('/register', 'App\Http\Controllers\AuthController@register');
 Route::post('/login', 'App\Http\Controllers\AuthController@authenticate');
@@ -44,10 +45,10 @@ Route::post('/login', 'App\Http\Controllers\AuthController@authenticate');
 
 Route::group(['middleware' => ['jwt.verify']], function () {
 
-    Route::post('user', 'App\Http\Controllers\AuthController@get_user');
-    Route::get('logout', 'App\Http\Controllers\AuthController@logout');
+    Route::get('user',  [AuthController::class, 'getuser']);
+    Route::get('logout', [AuthController::class, 'logout']);
     //cruds
-    Route::get('/dashboard', [HomeController::class, 'dashboard']);
+    Route::get('dashboard', [HomeController::class, 'dashboard']);
     Route::apiResource('web', WebController::class);
     Route::apiResource('banner', BannerController::class);
     Route::apiResource('noticias', NoticiaController::class);
