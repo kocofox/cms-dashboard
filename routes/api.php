@@ -45,7 +45,7 @@ Route::post('/login', 'App\Http\Controllers\AuthController@authenticate');
 
 Route::group(['middleware' => ['jwt.verify']], function () {
 
-    Route::get('user',  [AuthController::class, 'getuser']);
+    Route::post('user',  [AuthController::class, 'getuser']);
     Route::get('logout', [AuthController::class, 'logout']);
     //cruds
     Route::get('dashboard', [HomeController::class, 'dashboard']);
