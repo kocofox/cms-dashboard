@@ -27,7 +27,7 @@ class GuardarNoticiaRequest extends FormRequest
             'titulo' => 'required|unique:noticias,titulo,',
             'contenido' => 'required',
             'img' => 'required',
-            'categorias_id' => 'required',
+            'categoria_id' => 'required',
             'user_id' => 'required',
             'status' => '',
             'etiquetas' => '',

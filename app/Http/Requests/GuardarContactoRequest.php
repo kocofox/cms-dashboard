@@ -29,7 +29,7 @@ class GuardarContactoRequest extends FormRequest
             'correo' => 'required',
             'direccion' => '',
             'telefono' => 'required',
-
+            'imagen' => '',
             'asunto' => 'required',
             'mensaje' => 'required',
             
