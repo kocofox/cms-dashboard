@@ -32,15 +32,19 @@ class ContactoController extends Controller
     public function store(GuardarContactoRequest $request)
     {
        $request->validated();
+       $correos = new Contacto();
+
         $url_image = $this->upload($request->file('imagen'));
-        $correos = Contacto::create($request->all());
-        $correos->update(
-            [
-                'imagen' => $url_image,
-                
-            ]
-        );  
-        $smail = new ContactanosMailable($correos) ;
+        $correos->imagen = $url_image;
+        $correos->razonSocial = $request->input('razonSocial');
+        $correos->ruc = $request->input('ruc');
+        $correos->asunto = $request->input('asunto');
+        $correos->correo = $request->input('correo');
+        $correos->mensaje = $request->input('mensaje');
+        $correos->telefono = $request->input('telefono');
+        $correos->save();
+
+        $smail = new ContactanosMailable($correos);
          Mail::to('kocofox@gmail.com') ->send( $smail ) ;
         return (new WebResource($correos))->additional(['msg' => 'Mensaje enviado correctamente']);
     }
