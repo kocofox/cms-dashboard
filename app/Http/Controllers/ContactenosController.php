@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactanosMailable;
 use Illuminate\Support\Str;
 
-class ContactoController extends Controller
+class ContactenosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,13 +29,17 @@ class ContactoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(GuardarContactoRequest $request)
+    public function mensaje(GuardarContactoRequest $request)
     {
-       $request->validated();
-       $correos = new Contacto();
+        $request->validated();
 
-        $url_image = $this->upload($request->file('imagen'));
-        $correos->imagen = $url_image;
+        $correos = new Contacto();
+        if (!empty($request->file('imagen'))) {
+            $url_image = $this->upload($request->file('imagen'));
+            $correos->imagen = $url_image;
+        };
+
+        
         $correos->razonSocial = $request->input('razonSocial');
         $correos->ruc = $request->input('ruc');
         $correos->asunto = $request->input('asunto');
@@ -44,8 +48,8 @@ class ContactoController extends Controller
         $correos->telefono = $request->input('telefono');
         $correos->save();
 
-        //$smail = new ContactanosMailable($correos);
-//Mail::to('kocofox@gmail.com') ->send( $smail ) ;
+        $smail = new ContactanosMailable($correos);
+        Mail::to('kocofox@gmail.com')->send($smail);
         return (new WebResource($correos))->additional(['msg' => 'Mensaje enviado correctamente']);
     }
     private function upload($image)
@@ -57,7 +61,7 @@ class ContactoController extends Controller
 
         $rename = uniqid() . '-' . $name;
         $image->move(public_path() . "/$post_path", $rename);
-        return env('APP_URL')."$post_path/$rename";
+        return env('APP_URL') . "$post_path/$rename";
     }
     /**
      * Display the specified resource.
@@ -68,7 +72,7 @@ class ContactoController extends Controller
     public function show(Contacto $contacto)
 
     {
-       
+
         return new WebResource($contacto);
     }
 
@@ -82,7 +86,7 @@ class ContactoController extends Controller
     public function update(ActualizarContactoRequest $request, Contacto $contacto)
     {
         $contacto->update($request->all());
-      
+
         return (new WebResource($contacto))->additional(['msg' => 'Contacto actualizada correctamente']);
     }
 
@@ -95,7 +99,7 @@ class ContactoController extends Controller
     public function destroy(Contacto $contacto)
     {
         $contacto->delete();
-        
+
         return (new WebResource($contacto))->additional(['msg' => 'Contacto eliminada correctamente']);
     }
 }

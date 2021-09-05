@@ -37,7 +37,8 @@ Route::get('noticia', [HomeController::class, 'noticiasver']);
 Route::get('noticia/{noticia}', [HomeController::class, 'noticia']);
 Route::get('servicio', [HomeController::class, 'serviciosver']);
 Route::get('servicio/{servicio}', [HomeController::class, 'servicio']);
-Route::post('contactos', [ContactoController::class, 'store']);
+//Route::post('mensajes', [ContactenosController::class, 'mensaje']);
+Route::post('mensajes', 'App\Http\Controllers\ContactenosController@mensaje');
 //login
 //Route::post('/register', 'App\Http\Controllers\AuthController@register');
 Route::post('/login', 'App\Http\Controllers\AuthController@authenticate');
