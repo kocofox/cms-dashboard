@@ -17,7 +17,7 @@ class InfowebResource extends JsonResource
         return [
             'titulo' => $this->titulo,
             'descripcion' => $this->descripcion,
-            'etiquetas' => $this->etiquetas,
+            //'etiquetas' => $this->etiquetas,
             'logo' => $this->logo, //categorias::where('id', $this->categorias)->get(),
             'favicon' =>$this->favicon,
             'redes' => $this->redes,

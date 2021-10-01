@@ -45,17 +45,30 @@ class UsuariosController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $url_image = $this->upload($request->file('avatar'));
+
+
+
+        //   $url_image = $this->upload($request->file('avatar'));
         $user = User::create([
             'name' => $request->get('name'),
             'fullname' => $request->get('fullname'),
             'profiles_id' => $request->get('profiles_id'),
-            'avatar' => $this->upload($request->file('avatar')),
+          //  'avatar' =>  $url_image,
             'email' => $request->get('email'),
 
 
             'password' => Hash::make($request->get('password')),
         ]);
+        if (!empty($request->file('avatar'))) {
+            $url_image = $this->upload($request->file('avatar'));
+            $user->update(
+                [
+                    'avatar' => $url_image,
+
+                ]
+            );
+            // $correos->imagen = $url_image;
+        };
 
         // $token = JWTAuth::fromUser($user);
 
@@ -106,16 +119,16 @@ class UsuariosController extends Controller
         } else {
             $upw = $pw;
         };
-           // $user = $usuario;
-            $usuario->name = $request->get('name');
-            $usuario->fullname = $request->get('fullname');
-            $usuario->profiles_id = $request->get('profiles_id');
-            $usuario->avatar = $uavatar;
-            $usuario->email = $request->get('email');
+        // $user = $usuario;
+        $usuario->name = $request->get('name');
+        $usuario->fullname = $request->get('fullname');
+        $usuario->profiles_id = $request->get('profiles_id');
+        $usuario->avatar = $uavatar;
+        $usuario->email = $request->get('email');
 
 
-            $usuario->password = $upw;
-        
+        $usuario->password = $upw;
+
 
         $usuario->save();
 

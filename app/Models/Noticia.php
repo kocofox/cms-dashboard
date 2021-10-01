@@ -29,30 +29,32 @@ class Noticia extends Model
     {
         return 'titulo';
     }
-    public function resolveRouteBinding( $value, $field = NULL )
+    public function resolveRouteBinding($value, $field = NULL)
     {
         return $this->newQuery()
-            ->when( is_numeric( $value ), 
+            ->when(
+                is_numeric($value),
 
-                function ( $query ) use ( $value ) {
-                    $query->where('id', $value );
-                    
-                }, 
-                function ( $query ) use ( $value ) { // else
-                    $query->where('titulo', $value );
-                   
-                } 
+                function ($query) use ($value) {
+                    $query->where('id', $value);
+                },
+                function ($query) use ($value) { // else
+                    $query->where('titulo', $value);
+                }
             )
             ->firstOrFail();
     }
-    
-public function categoria()
+
+    public function categoria()
     {
         return $this->belongsTo('App\Models\Categoria');
+    }
+    public function image()
+    {
+        return $this->hasMany('App\Models\Image');
     }
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
-    
 }

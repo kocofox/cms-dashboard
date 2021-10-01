@@ -7,6 +7,7 @@ use App\Http\Requests\GuardarServicioRequest;
 use App\Http\Resources\WebResource;
 use App\Http\Resources\ServicioResource;
 use App\Models\Servicio;
+use App\Models\Image;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -45,6 +46,16 @@ class ServicioController extends Controller
         $servicio->categoria_id = $request->input('categoria_id');
 
         $servicio->save();
+        if (!empty($request->file('images'))) {
+            $pics= $request->images;
+          
+             foreach($pics as $imgg) {
+                 $img = new Image();
+                 $img->image_caption =  $servicio->nombre;
+                 $img->image_path = $this->upload($imgg);
+                 $img->post_id = $servicio->id;
+                 $img->save();
+            } };
         return (new ServicioResource($servicio))->additional(['msg' => 'Servicio agregada correctamente']);
     }
 

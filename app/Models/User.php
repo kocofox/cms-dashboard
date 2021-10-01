@@ -58,8 +58,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Models\Noticia');
 
     }
-    public function profile(){
-        return $this->belongsTo('App\Models\Profile');
+    public function roles(){
+        return $this->belongsTo('App\Models\Role');
 
     }
 }

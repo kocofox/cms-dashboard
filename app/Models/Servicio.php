@@ -42,4 +42,8 @@ class Servicio extends Model
         return $this->belongsTo('App\Models\Categoria');
 
     }
+    public function image()
+    {
+        return $this->hasMany('App\Models\Image');
+    }
 }

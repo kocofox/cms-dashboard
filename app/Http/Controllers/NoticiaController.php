@@ -7,6 +7,7 @@ use App\Http\Requests\GuardarNoticiaRequest;
 use App\Http\Resources\NoticiaResource;
 use App\Http\Resources\NoticiahomeResource;
 use App\Models\Noticia;
+use App\Models\Image;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Str;
 
@@ -48,6 +49,16 @@ class NoticiaController extends Controller
         $post->redes = $request->input('redes');
         $post->otros = $request->input('otros');
         $post->save();
+        if (!empty($request->file('images'))) {
+        $pics= $request->images;
+      
+         foreach($pics as $imgg) {
+             $img = new Image();
+             $img->image_caption =  $post->nombre;
+             $img->image_path = $this->upload($imgg);
+             $img->post_id = $post->id;
+             $img->save();
+        } };
         //$res = 
         //return (new NoticiaResource(Noticia::create($request->all())))->additional(['msg' => 'Noticia agregada correctamente']);
 
@@ -74,13 +85,7 @@ class NoticiaController extends Controller
     public function show(Noticia $noticia)
 
     {
-        // $post = Noticia::where('titulo', $noticia ) ->orWhere(function ($query) use ($noticia){
-        //     if(is_numeric($noticia)){
-        //         $query->where('id', $noticia);
-        //     } })->firstOrFail();
-        // } );
-       // $post = Noticia::where('titulo', $noticia->titulo)->firstOrFail();  
-        //dd($post);  
+      
         return new NoticiaResource($noticia);
     }
 

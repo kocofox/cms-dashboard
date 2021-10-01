@@ -21,7 +21,8 @@ class CreateServiciosTable extends Migration
             $table->unsignedBigInteger('categoria_id')->nullable();
             $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('set null');
             $table->string('imagen')->nullable();
-            $table->json('imgs')->nullable();
+             $table->json('imgs')->nullable();
+            $table->string('estado')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
