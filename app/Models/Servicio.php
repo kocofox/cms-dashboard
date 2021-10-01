@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class servicio extends Model
+class Servicio extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -41,5 +41,9 @@ class servicio extends Model
     public function categoria(){
         return $this->belongsTo('App\Models\Categoria');
 
+    }
+    public function image()
+    {
+        return $this->hasMany('App\Models\Image');
     }
 }

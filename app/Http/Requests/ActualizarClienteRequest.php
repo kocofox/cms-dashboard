@@ -25,7 +25,7 @@ class ActualizarClienteRequest extends FormRequest
     {
         return [
             'razonSocial' => 'required|unique:clientes,razonSocial,' . $this->route('cliente')->id, //'required|unique:noticias,titulo,{$this->noticias->id}',
-            'ruc' => 'required',
+            'ruc' => '',
             'correo' => '',
             'direccion' => '',
             'telefono' => '',

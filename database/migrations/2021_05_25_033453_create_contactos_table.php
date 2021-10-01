@@ -17,6 +17,7 @@ class CreateContactosTable extends Migration
             $table->id();
             $table->string('razonSocial');
             $table->string('ruc');
+            $table->string('imagen');
             $table->string('correo');
             $table->string('direccion');
             $table->string('telefono');

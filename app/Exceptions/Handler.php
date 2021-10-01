@@ -46,9 +46,5 @@ class Handler extends ExceptionHandler
             'errors' => $exception->errors(),
         ], $exception->status);
     }
-    public function render($request, Throwable $e)
-    {
-        return app('Fruitcake\Cors\HandleCors')
-            ->handle($request, fn() => parent::render($request, $e));
-    }
+   
 }

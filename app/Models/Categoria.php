@@ -23,4 +23,8 @@ class Categoria extends Model
         return $this->hasMany('App\Models\Servicio');
 
     }
+    public function trabajos(){
+        return $this->hasMany('App\Models\Trabajo');
+
+    }
 }

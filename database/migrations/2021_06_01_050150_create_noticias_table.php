@@ -26,6 +26,7 @@ class CreateNoticiasTable extends Migration
             $table->json('etiquetas')->nullable();
             $table->json('redes')->nullable();
             $table->json('otros')->nullable();
+            $table->string('estado')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

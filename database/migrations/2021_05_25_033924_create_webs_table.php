@@ -21,9 +21,9 @@ class CreateWebsTable extends Migration
             $table->string('logo')->nullable();
             $table->string('favicon')->nullable();
             $table->json('redes')->nullable();
-            $table->longText('nosotros')->nullable();
-            $table->longText('mision')->nullable();
-            $table->longText('vision')->nullable();
+            $table->string('nosotros')->nullable();
+            $table->string('mision')->nullable();
+            $table->string('vision')->nullable();
             $table->json('footer')->nullable();
             $table->timestamps();
         });

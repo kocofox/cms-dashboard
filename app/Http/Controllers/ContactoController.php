@@ -44,8 +44,8 @@ class ContactoController extends Controller
         $correos->telefono = $request->input('telefono');
         $correos->save();
 
-        $smail = new ContactanosMailable($correos);
-         Mail::to('kocofox@gmail.com') ->send( $smail ) ;
+        //$smail = new ContactanosMailable($correos);
+//Mail::to('kocofox@gmail.com') ->send( $smail ) ;
         return (new WebResource($correos))->additional(['msg' => 'Mensaje enviado correctamente']);
     }
     private function upload($image)

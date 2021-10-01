@@ -12,6 +12,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\TrabajoController;
+use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,11 +35,15 @@ use Illuminate\Support\Facades\Route;
 //info empresa
 Route::get('home', [HomeController::class, 'index']);
 Route::get('inicio', [HomeController::class, 'datosweb']);
+Route::get('nosotros', [HomeController::class, 'nosotros']);
 Route::get('noticia', [HomeController::class, 'noticiasver']);
 Route::get('noticia/{noticia}', [HomeController::class, 'noticia']);
 Route::get('servicio', [HomeController::class, 'serviciosver']);
+Route::get('trabajo', [HomeController::class, 'trabajosver']);
 Route::get('servicio/{servicio}', [HomeController::class, 'servicio']);
-Route::post('contactos', [ContactoController::class, 'store']);
+Route::get('trabajo/{trabajo}', [HomeController::class, 'trabajo']);
+//Route::post('mensajes', [ContactenosController::class, 'mensaje']);
+Route::post('mensajes', 'App\Http\Controllers\ContactenosController@mensaje');
 //login
 //Route::post('/register', 'App\Http\Controllers\AuthController@register');
 Route::post('/login', 'App\Http\Controllers\AuthController@authenticate');
@@ -49,6 +55,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('logout', [AuthController::class, 'logout']);
     //cruds
     Route::get('dashboard', [HomeController::class, 'dashboard']);
+    Route::get('imagenes/{id}', [ImagenController::class, 'getAll']);
+    Route::delete('deleteimg/{id}', [ImagenController::class, 'eliminarImg']);
     Route::apiResource('web', WebController::class);
     Route::apiResource('banner', BannerController::class);
     Route::apiResource('noticias', NoticiaController::class);
@@ -56,6 +64,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::apiResource('empresa', EmpresaController::class);
     Route::apiResource('clientes', ClienteController::class);
     Route::apiResource('servicios', ServicioController::class);
+    Route::apiResource('trabajos', TrabajoController::class);
     Route::apiResource('roles', RoleController::class);
     Route::apiResource('contacto', ContactoController::class);
     Route::apiResource('usuarios', UsuariosController::class);

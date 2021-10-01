@@ -15,12 +15,12 @@ class InfoResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'titulo' => $this->titulo,
-            'descripcion' => $this->descripcion,
+             'titulo' => $this->titulo,
+             'descripcion' => $this->descripcion,
             'etiquetas' => $this->etiquetas,
-            'logo' => $this->logo, //categorias::where('id', $this->categorias)->get(),
-            'favicon' =>$this->favicon,
-            'redes' => $this->redes,
+             'logo' => $this->logo, //categorias::where('id', $this->categorias)->get(),
+             'favicon' =>$this->favicon,
+             'redes' => $this->redes,
             'nosotros' => $this->nosotros,
             'mision' => $this->mision,
             'vision' => $this->vision,
