@@ -13,7 +13,7 @@ class CreateTrabajosTable extends Migration
      */
     public function up()
     {
-        Schema::create('Trabajos', function (Blueprint $table) {
+        Schema::create('trabajos', function (Blueprint $table) {
             $table->id();
             $table->String('nombre');
             $table->String('lugar')->nullable();
