@@ -21,7 +21,7 @@ class ServicioController extends Controller
      */
     public function index()
     {
-        return ServicioResource::collection(Servicio::orderBy('id','desc')->paginate(request('per_page')));
+        return ServicioResource::collection(Servicio::orderBy('id', 'desc')->paginate(request('per_page')));
     }
 
     /**
@@ -46,16 +46,16 @@ class ServicioController extends Controller
         $servicio->categoria_id = $request->input('categoria_id');
 
         $servicio->save();
-        
-            $pics= $request->images;
-          
-             foreach($pics as $imgg) {
-                 $img = new Image();
-                 $img->image_caption =  $servicio->nombre;
-                 $img->image_path = $this->upload($imgg);
-                 $img->servicio_id = $servicio->id;
-                 $img->save();
-            } ;
+
+        $pics = $request->images;
+
+        foreach ($pics as $imgg) {
+            $img = new Image();
+            $img->image_caption =  $servicio->nombre;
+            $img->image_path = $this->upload($imgg);
+            $img->servicio_id = $servicio->id;
+            $img->save();
+        };
         return (new ServicioResource($servicio))->additional(['msg' => 'Servicio agregada correctamente']);
     }
 
@@ -68,7 +68,7 @@ class ServicioController extends Controller
     public function show(Servicio $servicio)
 
     {
-       
+
         return new ServicioResource($servicio);
     }
 
@@ -82,14 +82,21 @@ class ServicioController extends Controller
     public function update(ActualizarServicioRequest $request, Servicio $servicio)
     {
         $serviciodel = $servicio->imagen;
-        
-        
+
+
         $text = json_decode($request->imgs);
 
         if ($request->file('images')) {
-            $pics= $request->images;
-            $idTrab = $servicio;
-            self::imagenes($pics, $idTrab);    }
+            $pics = $request->images;
+
+            foreach ($pics as $imgg) {
+                $img = new Image();
+                $img->image_caption =  $servicio->nombre;
+                $img->image_path = $this->upload($imgg);
+                $img->servicio_id = $servicio->id;
+                $img->save();
+            };
+        }
 
         $servicio->update($request->all());
         $servicio->update(
@@ -122,7 +129,7 @@ class ServicioController extends Controller
         }
 
 
-      
+
         return (new ServicioResource($servicio))->additional(['msg' => 'Servicio actualizada correctamente']);
     }
 
@@ -137,7 +144,7 @@ class ServicioController extends Controller
         $imgdel = Str::replace(env('APP_URL'), '', $servicio->imagen);
         File::delete($imgdel);
         $servicio->delete();
-        
+
         return (new WebResource($servicio))->additional(['msg' => 'Servicio eliminada correctamente']);
     }
     private function upload($image)
@@ -153,12 +160,12 @@ class ServicioController extends Controller
     }
     private function imagenes($pics, $idTrab)
     {
-        foreach($pics as $imgg) {
+        foreach ($pics as $imgg) {
             $img = new Image();
             $img->image_caption =  $idTrab->nombre;
             $img->image_path = $this->upload($imgg);
             $img->servicio_id = $idTrab->id;
             $img->save();
-       }
+        }
     }
 }
