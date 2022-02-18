@@ -20,7 +20,7 @@ class ContactoController extends Controller
      */
     public function index()
     {
-        return WebResource::collection(Contacto::paginate(request('per_page')));
+        return WebResource::collection(Contacto::orderBy('id','desc')->paginate(request('per_page')));
     }
 
     /**

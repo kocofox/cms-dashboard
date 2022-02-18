@@ -11,18 +11,33 @@ use Illuminate\Http\Request;
 class ImagenController extends Controller
 {
    
-    public function getAll(Request $request)
+    public function getAll($url,  $request)
     {  
-        $trabajos = Image::where('post_id', $request->id)->orderBy('id','desc')->get();   
+        
+        switch ($url) {
+            case "noticias":
+                $tipo = "noticia_id";
+              break;
+            case "servicios":
+                $tipo = "servicio_id";
+              break;
+            case "trabajos":
+                $tipo = "trabajo_id";
+              break;
+          }
+
+        $trabajos = Image::where($tipo, $request)->orderBy('id','asc')->get();   
         return new WebResource($trabajos);
     }
-    public function eliminarImg(Image $image)
+   
+    public function eliminarImg($id)
     {
-        
-        $imgdel = Str::replace(env('APP_URL'), '', $image->image_paath);
+        $imagendel = Image::find($id);
+       
+      $imgdel = Str::replace(env('APP_URL'), '', $imagendel->image_path);
         File::delete($imgdel);
-        $image->delete();
+       $imagendel->delete();
         
-        return (new WebResource($image))->additional(['msg' => 'Trabajo eliminada correctamente']);
+        return (new WebResource($imagendel))->additional(['msg' => 'Imagen eliminada', $imagendel]);
     }
 }

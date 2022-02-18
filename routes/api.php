@@ -44,6 +44,7 @@ Route::get('servicio/{servicio}', [HomeController::class, 'servicio']);
 Route::get('trabajo/{trabajo}', [HomeController::class, 'trabajo']);
 //Route::post('mensajes', [ContactenosController::class, 'mensaje']);
 Route::post('mensajes', 'App\Http\Controllers\ContactenosController@mensaje');
+Route::get('imagenes/{url}/{id}', [ImagenController::class, 'getAll']);
 //login
 //Route::post('/register', 'App\Http\Controllers\AuthController@register');
 Route::post('/login', 'App\Http\Controllers\AuthController@authenticate');
@@ -55,7 +56,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('logout', [AuthController::class, 'logout']);
     //cruds
     Route::get('dashboard', [HomeController::class, 'dashboard']);
-    Route::get('imagenes/{id}', [ImagenController::class, 'getAll']);
+    //Route::get('imagenes/{id}', [ImagenController::class, 'getAll']);
     Route::delete('deleteimg/{id}', [ImagenController::class, 'eliminarImg']);
     Route::apiResource('web', WebController::class);
     Route::apiResource('banner', BannerController::class);

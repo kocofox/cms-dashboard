@@ -19,7 +19,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        return WebResource::collection(Cliente::paginate(request('per_page')));
+        return WebResource::collection(Cliente::orderBy('id','desc')->paginate(request('per_page')));
     }
 
     /**

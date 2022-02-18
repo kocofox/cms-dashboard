@@ -19,7 +19,7 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        return WebResource::collection(Empresa::paginate(request('per_page')));
+        return WebResource::collection(Empresa::orderBy('id','desc')->paginate(request('per_page')));
     }
 
     /**

@@ -19,7 +19,7 @@ class BannerController extends Controller
      */
     public function index()
     {
-        return WebResource::collection(Banner::paginate(request('per_page')));
+        return WebResource::collection(Banner::orderBy('id','desc')->paginate(request('per_page')));
     }
 
     /**

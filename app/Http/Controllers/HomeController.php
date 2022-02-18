@@ -35,15 +35,15 @@ class HomeController extends Controller
                 'count' => Contacto::count(),
             ],
             'Clientes' => [
-                'clientes' => Cliente::take(6)->get(),
+                'clientes' => Cliente::orderBy('id','desc')->take(6)->get(),
                 'count' => Cliente::count(),
             ],
             'Servicios' => [
-                'Servicio' => Servicio::take(4)->get(),
+                'Servicio' => Servicio::orderBy('id','desc')->take(4)->get(),
                 'count' => Servicio::count(),
             ],
             'Trabajos' => [
-                'Trabajo' => Trabajo::take(4)->get(),
+                'Trabajo' => Trabajo::orderBy('id','desc')->take(4)->get(),
                 'count' => Trabajo::count(),
             ]
 
@@ -66,7 +66,7 @@ class HomeController extends Controller
     public function noticiasver()
     {
 
-        return NoticiahomeResource::collection(Noticia::paginate(request('per_page')));
+        return NoticiahomeResource::collection(Noticia::orderBy('id','desc')->paginate(request('per_page')));
     }
     public function noticia(Noticia $noticia)
     {
@@ -74,11 +74,11 @@ class HomeController extends Controller
     }
     public function serviciosver()
     {
-        return ServicioResource::collection(Servicio::paginate(request('per_page')));
+        return ServicioResource::collection(Servicio::orderBy('id','desc')->paginate(request('per_page')));
     }
     public function trabajosver()
     {
-        return TrabajoResource::collection(Trabajo::paginate(request('per_page')));
+        return TrabajoResource::collection(Trabajo::orderBy('id','desc')->paginate(request('per_page')));
     }
     public function servicio(Servicio $servicio)
 

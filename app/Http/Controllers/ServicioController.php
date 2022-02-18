@@ -21,7 +21,7 @@ class ServicioController extends Controller
      */
     public function index()
     {
-        return ServicioResource::collection(Servicio::paginate(request('per_page')));
+        return ServicioResource::collection(Servicio::orderBy('id','desc')->paginate(request('per_page')));
     }
 
     /**
@@ -46,16 +46,16 @@ class ServicioController extends Controller
         $servicio->categoria_id = $request->input('categoria_id');
 
         $servicio->save();
-        if (!empty($request->file('images'))) {
+        
             $pics= $request->images;
           
              foreach($pics as $imgg) {
                  $img = new Image();
                  $img->image_caption =  $servicio->nombre;
                  $img->image_path = $this->upload($imgg);
-                 $img->post_id = $servicio->id;
+                 $img->servicio_id = $servicio->id;
                  $img->save();
-            } };
+            } ;
         return (new ServicioResource($servicio))->additional(['msg' => 'Servicio agregada correctamente']);
     }
 
@@ -85,6 +85,11 @@ class ServicioController extends Controller
         
         
         $text = json_decode($request->imgs);
+
+        if ($request->file('images')) {
+            $pics= $request->images;
+            $idTrab = $servicio;
+            self::imagenes($pics, $idTrab);    }
 
         $servicio->update($request->all());
         $servicio->update(
@@ -145,5 +150,15 @@ class ServicioController extends Controller
         $rename = uniqid() . '-' . $name . '.' . $path_info['extension'];
         $image->move(public_path() . "/$post_path", $rename);
         return env('APP_URL') . "$post_path/$rename";
+    }
+    private function imagenes($pics, $idTrab)
+    {
+        foreach($pics as $imgg) {
+            $img = new Image();
+            $img->image_caption =  $idTrab->nombre;
+            $img->image_path = $this->upload($imgg);
+            $img->servicio_id = $idTrab->id;
+            $img->save();
+       }
     }
 }

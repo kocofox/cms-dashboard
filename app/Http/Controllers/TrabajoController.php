@@ -21,7 +21,7 @@ class TrabajoController extends Controller
      */
     public function index()
     {
-        return TrabajoResource::collection(Trabajo::paginate(request('per_page')));
+        return TrabajoResource::collection(Trabajo::orderBy('id', 'desc')->paginate(request('per_page')));
     }
 
     /**
@@ -31,24 +31,28 @@ class TrabajoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(GuardarTrabajoRequest $request)
-    { 
+    {
         $request->validated();
         $trabajo = new Trabajo();
+        $url_image = $this->upload($request->file('imagen'));
+        $trabajo->imagen = $url_image;
         $trabajo->nombre = $request->input('nombre');
         $trabajo->lugar = $request->input('lugar');
+
         $trabajo->descripcion = $request->input('descripcion');
-        $trabajo->categoria_id = $request->input('categoria_id');      
+        $trabajo->categoria_id = $request->input('categoria_id');
         $trabajo->save();
-        $pics= $request->images;
-      
-         foreach($pics as $imgg) {
-             $img = new Image();
-             $img->image_caption =  $trabajo->nombre;
-             $img->image_path = $this->upload($imgg);
-             $img->post_id = $trabajo->id;
-             $img->save();
+        $pics = $request->images;
+        // $idTrab = $trabajo;
+        // self::imagenes($pics, $idTrab);
+        foreach ($pics as $imgg) {
+            $img = new Image();
+            $img->image_caption =  $trabajo->nombre;
+            $img->image_path = $this->upload($imgg);
+            $img->trabajo_id = $trabajo->id;
+            $img->save();
         }
-          return (new TrabajoResource($trabajo))->additional(['msg' => 'Trabajo agregada correctamente']);
+        return (new TrabajoResource($trabajo))->additional(['msg' => 'Trabajo agregada correctamente']);
     }
 
     /**
@@ -58,7 +62,7 @@ class TrabajoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Trabajo $trabajo)
-    { 
+    {
         return new TrabajoResource($trabajo);
     }
 
@@ -72,10 +76,20 @@ class TrabajoController extends Controller
     public function update(ActualizarTrabajoRequest $request, Trabajo $trabajo)
     {
         $trabajodel = $trabajo->imagen;
-        
-        
-        $text = json_decode($request->imgs);
 
+
+        $text = json_decode($request->imgs);
+        if ($request->file('images')) {
+            $pics = $request->images;
+           // $idTrab = $trabajo;
+            foreach($pics as $imgg) {
+                $img = new Image();
+                $img->image_caption =  $trabajo->nombre;
+                $img->image_path = $this->upload($imgg);
+                $img->trabajo_id = $trabajo->id;
+                $img->save();
+           }
+        }
         $trabajo->update($request->all());
         $trabajo->update(
             [
@@ -107,7 +121,7 @@ class TrabajoController extends Controller
         }
 
 
-      
+
         return (new TrabajoResource($trabajo))->additional(['msg' => 'Trabajo actualizada correctamente']);
     }
 
@@ -122,7 +136,7 @@ class TrabajoController extends Controller
         $imgdel = Str::replace(env('APP_URL'), '', $trabajo->imagen);
         File::delete($imgdel);
         $trabajo->delete();
-        
+
         return (new WebResource($trabajo))->additional(['msg' => 'Trabajo eliminada correctamente']);
     }
     private function upload($image)
@@ -136,5 +150,15 @@ class TrabajoController extends Controller
         $image->move(public_path() . "/$post_path", $rename);
         return env('APP_URL') . "$post_path/$rename";
     }
-    
+
+    private function imagenes($pics, $idTrab)
+    {
+        foreach ($pics as $imgg) {
+            $img = new Image();
+            $img->image_caption =  $idTrab->nombre;
+            $img->image_path = $this->upload($imgg);
+            $img->trabajos_id = $idTrab->id;
+            $img->save();
+        }
+    }
 }

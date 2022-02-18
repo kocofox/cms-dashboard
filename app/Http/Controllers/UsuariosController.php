@@ -24,7 +24,7 @@ class UsuariosController extends Controller
     public function index()
     {
 
-        return UserResource::collection(User::paginate(request('per_page')));
+        return UserResource::collection(User::orderBy('id','desc')->paginate(request('per_page')));
     }
 
     /**

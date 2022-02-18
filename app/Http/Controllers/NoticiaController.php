@@ -23,7 +23,7 @@ class NoticiaController extends Controller
     public function index()
     {
         
-        return NoticiaResource::collection(Noticia::paginate(request('per_page')));
+        return NoticiaResource::collection(Noticia::orderBy('id','desc')->paginate(request('per_page')));
     }
 
     /**

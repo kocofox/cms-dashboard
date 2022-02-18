@@ -22,7 +22,7 @@ class TrabajoResource extends JsonResource
             'descripcion' => $this->descripcion,
             'categoria_id' => $this->categoria_id,
             'categorias' => $this->categoria, //categorias::where('id', $this->categorias)->get(),
-            //'imagen' => $this->imagen->with('post_id', $this->id),
+            'imagen' => $this->imagen,
 
             
             

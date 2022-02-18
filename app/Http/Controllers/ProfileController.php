@@ -17,7 +17,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return WebResource::collection(Profile::paginate(request('per_page')));
+        return WebResource::collection(Profile::orderBy('id','desc')->paginate(request('per_page')));
     }
 
     /**

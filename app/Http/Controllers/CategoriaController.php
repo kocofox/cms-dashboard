@@ -17,7 +17,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        return WebResource::collection(Categoria::paginate(request('per_page')));
+        return WebResource::collection(Categoria::orderBy('id','desc')->paginate(request('per_page')));
     }
 
     /**

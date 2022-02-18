@@ -17,7 +17,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return WebResource::collection(Role::paginate(request('per_page')));
+        return WebResource::collection(Role::orderBy('id','desc')->paginate(request('per_page')));
     }
 
     /**
