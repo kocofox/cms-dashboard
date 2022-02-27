@@ -19,7 +19,7 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        return WebResource::collection(Empresa::orderBy('id','desc')->paginate(request('per_page')));
+        return WebResource::collection(Empresa::orderBy('id', 'desc')->paginate(request('per_page')));
     }
 
     /**
@@ -30,7 +30,7 @@ class EmpresaController extends Controller
      */
     public function store(GuardarEmpresaRequest $request)
     {
-        
+
         $request->validated();
 
 
@@ -61,7 +61,7 @@ class EmpresaController extends Controller
     public function show(Empresa $empresa)
 
     {
-       
+
         return new WebResource($empresa);
     }
 
@@ -74,39 +74,76 @@ class EmpresaController extends Controller
      */
     public function update(ActualizarEmpresaRequest $request, Empresa $empresa)
     {
-        $logodel = $empresa->url;
-        $img = Str::replace(env('APP_URL'), '', $empresa->url);
-        $url_image = $this->upload($request->file('logo'));
-        $horario = json_decode($request->horario);
+        $old = $empresa;
+        $logodel = Str::replace(env('APP_URL'), '', $empresa->logo);
+        $favidel = Str::replace(env('APP_URL'), '', $empresa->favicon);
+        $nosdel = Str::replace(env('APP_URL'), '', $empresa->nosotros);
+        $midel = Str::replace(env('APP_URL'), '', $empresa->mision);
+        $videl = Str::replace(env('APP_URL'), '', $empresa->vision);
+        // $img = Str::replace(env('APP_URL'), '', $empresa->url);
+        $logo_image = $this->upload($request->file('logo'));
+        $favicon_image = $this->upload($request->file('favicon'));
+        $nosotros_image = $this->upload($request->file('nosotros'));
+        $mision_image = $this->upload($request->file('mision'));
+        $vision_image = $this->upload($request->file('vision'));
+
+
         $tag = json_decode($request->etiquetas);
+
         $empresa->update($request->all());
         $empresa->update(
             [
-                'horario' => $horario,
                 'etiquetas' => $tag
             ]
         );
-        if ($request->file('url')) {
-            if ($empresa->url) {
-                File::delete($img);
-                $empresa->update(
-                    [
-                        'url' =>  $url_image
-                    ]
-                );
-            } else {
-                $empresa->created([
-                    'url' => $url_image
-                ]);
-            }
-        } else {
-            $empresa->update(
-                [
-                    'logo' => $logodel
-
-                ]
-            );
+        if ($request->file('logo')) {
+            File::delete($logodel);
+            $empresa->update(['logo' =>  $logo_image]);
+        } else { $empresa->update(['logo' =>  $old->logo]);
         }
+        if ($request->file('favicon')) {
+            File::delete($favidel);
+            $empresa->update(['favicon' =>  $favicon_image]);
+        } else { $empresa->update(['favicon' =>  $old->favicon]);
+        }
+        if ($request->file('nosotros')) {
+            File::delete($nosdel);
+            $empresa->update(['nosotros' =>  $nosotros_image]);
+        } else { $empresa->update(['nosotros' =>  $old->nosotros]);
+        }
+        if ($request->file('vision')) {
+            File::delete($midel);
+            $empresa->update(['vision' =>  $vision_image]);
+        } else { $empresa->update(['vision' =>  $old->vision]);
+        }
+        if ($request->file('mision')) {
+            File::delete($videl);
+            $empresa->update(['mision' =>  $mision_image]);
+        } else { $empresa->update(['mision' =>  $old->mision]);
+        }
+
+
+        // if ($request->file('logo')) {
+        //     if ($empresa->url) {
+        //         File::delete($img);
+        //         $empresa->update(
+        //             [
+        //                 'url' =>  $url_image
+        //             ]
+        //         );
+        //     } else {
+        //         $empresa->created([
+        //             'url' => $url_image
+        //         ]);
+        //     }
+        // } else {
+        //     $empresa->update(
+        //         [
+        //             'logo' => $logodel
+
+        //         ]
+        //     );
+        // }
 
         return (new WebResource($empresa))->additional(['msg' => 'Empresa actualizada correctamente']);
     }
@@ -122,7 +159,7 @@ class EmpresaController extends Controller
         $imgdel = Str::replace(env('APP_URL'), '', $empresa->url);
         File::delete($imgdel);
         $empresa->delete();
-        
+
         return (new WebResource($empresa))->additional(['msg' => 'Empresa eliminada correctamente']);
     }
     private function upload($image)
@@ -130,7 +167,7 @@ class EmpresaController extends Controller
         $filename =  $image->getClientOriginalName();
         $name = Str::replace(" ", '_', $filename);
         $path_info = pathinfo($image->getClientOriginalName());
-        $post_path = 'images/empresas';
+        $post_path = 'images/trabajos';
 
         $rename = uniqid() . '-' . $name . '.' . $path_info['extension'];
         $image->move(public_path() . "/$post_path", $rename);
