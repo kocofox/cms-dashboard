@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['esb.com.pe'],
+    'allowed_origins' => ['https://esb.com.pe'],
 
     'allowed_origins_patterns' => [],
 
