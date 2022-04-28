@@ -42,16 +42,20 @@ class TrabajoController extends Controller
         $trabajo->descripcion = $request->input('descripcion');
         $trabajo->categoria_id = $request->input('categoria_id');
         $trabajo->save();
-        $pics = $request->images;
-        // $idTrab = $trabajo;
-        // self::imagenes($pics, $idTrab);
-        foreach ($pics as $imgg) {
-            $img = new Image();
-            $img->image_caption =  $trabajo->nombre;
-            $img->image_path = $this->upload($imgg);
-            $img->trabajo_id = $trabajo->id;
-            $img->save();
+        if ($request->images) {
+            $pics = $request->images;
+            // $idTrab = $trabajo;
+            // self::imagenes($pics, $idTrab);
+            foreach ($pics as $imgg) {
+                $img = new Image();
+                $img->image_caption =  $trabajo->nombre;
+                $img->image_path = $this->upload($imgg);
+                $img->trabajo_id = $trabajo->id;
+                $img->save();
+            }
         }
+
+
         return (new TrabajoResource($trabajo))->additional(['msg' => 'Trabajo agregada correctamente']);
     }
 
@@ -81,14 +85,14 @@ class TrabajoController extends Controller
         $text = json_decode($request->imgs);
         if ($request->file('images')) {
             $pics = $request->images;
-           // $idTrab = $trabajo;
-            foreach($pics as $imgg) {
+            // $idTrab = $trabajo;
+            foreach ($pics as $imgg) {
                 $img = new Image();
                 $img->image_caption =  $trabajo->nombre;
                 $img->image_path = $this->upload($imgg);
                 $img->trabajo_id = $trabajo->id;
                 $img->save();
-           }
+            }
         }
         $trabajo->update($request->all());
         $trabajo->update(

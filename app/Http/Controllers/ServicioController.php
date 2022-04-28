@@ -46,16 +46,19 @@ class ServicioController extends Controller
         $servicio->categoria_id = $request->input('categoria_id');
 
         $servicio->save();
+        if ($request->images) {
 
-        $pics = $request->images;
+            $pics = $request->images;
 
-        foreach ($pics as $imgg) {
-            $img = new Image();
-            $img->image_caption =  $servicio->nombre;
-            $img->image_path = $this->upload($imgg);
-            $img->servicio_id = $servicio->id;
-            $img->save();
-        };
+            foreach ($pics as $imgg) {
+                $img = new Image();
+                $img->image_caption =  $servicio->nombre;
+                $img->image_path = $this->upload($imgg);
+                $img->servicio_id = $servicio->id;
+                $img->save();
+            };
+        }
+
         return (new ServicioResource($servicio))->additional(['msg' => 'Servicio agregada correctamente']);
     }
 

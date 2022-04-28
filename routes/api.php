@@ -57,7 +57,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //cruds
     Route::get('dashboard', [HomeController::class, 'dashboard']);
     //Route::get('imagenes/{id}', [ImagenController::class, 'getAll']);
-    Route::delete('deleteimg/{id}', [ImagenController::class, 'eliminarImg']);
+    Route::post('deleteimg/{id}', [ImagenController::class, 'eliminarImg']);
     Route::apiResource('web', WebController::class);
     Route::apiResource('banner', BannerController::class);
     Route::apiResource('noticias', NoticiaController::class);
