@@ -34,7 +34,7 @@ class ContactenosController extends Controller
         $request->validated();
 
         $correos = new Contacto();
-        if (!empty($request->file('imagen'))) {
+        if ($request->file('imagen')) {
             $url_image = $this->upload($request->file('imagen'));
             $correos->imagen = $url_image;
         };
