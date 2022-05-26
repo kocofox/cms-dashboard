@@ -35,7 +35,7 @@ class HomeController extends Controller
                 'count' => Contacto::count(),
             ],
             'Clientes' => [
-                'clientes' => Cliente::orderBy('id','desc')->take(6)->get(),
+                'clientes' => Cliente::orderBy('id','desc')->take(30)->get(),
                 'count' => Cliente::count(),
             ],
             'Servicios' => [
